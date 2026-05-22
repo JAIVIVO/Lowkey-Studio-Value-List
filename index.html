@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             
-            /* Kolory mutacji */
+            /* Mutation Colors */
             --gold: #eab308;
             --diamond: #38bdf8;
             --rainbow: #ec4899;
@@ -103,10 +103,37 @@
             border: 1px solid #334155;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
         }
 
         .pet-card:hover {
             transform: translateY(-5px);
+        }
+
+        /* Pet Image Styling */
+        .pet-image-container {
+            width: 100%;
+            height: 150px;
+            background: #0f172a;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+
+        .pet-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .pet-image-placeholder {
+            font-size: 3rem;
+            color: #334155;
         }
 
         .pet-header {
@@ -154,7 +181,7 @@
             font-weight: bold;
         }
 
-        /* Sekcja Mutacji */
+        /* Mutations Section */
         .mutations-title {
             font-size: 0.9rem;
             color: var(--text-muted);
@@ -181,12 +208,12 @@
 
     <header>
         <h1>PSX OG Value List</h1>
-        <p>Wartości petów giełdy Pet Simulator X OG — Huge & Titanic</p>
+        <p>Live marketplace values for Pet Simulator X OG — Huge & Titanic</p>
     </header>
 
     <div class="controls">
-        <input type="text" id="search" class="search-bar" placeholder="Wyszukaj peta...">
-        <button class="filter-btn active" onclick="filterCategory('all')">Wszystkie</button>
+        <input type="text" id="search" class="search-bar" placeholder="Search pet...">
+        <button class="filter-btn active" onclick="filterCategory('all')">All Pets</button>
         <button class="filter-btn" onclick="filterCategory('Huge')">Huge</button>
         <button class="filter-btn" onclick="filterCategory('Titanic')">Titanic</button>
     </div>
@@ -195,12 +222,13 @@
         </main>
 
     <script>
-        // --- BAZA DANYCH PETÓW (TUTAJ WPISUJESZ I EDYTUJESZ CENY) ---
+        // --- PET DATABASE (EDIT VALUES & IMAGE LINKS HERE) ---
         const database = [
             {
                 name: "Huge Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
+                img: "https://static.wikia.nocookie.net/pet-simulator/images/e/e3/Huge_Cat.png", // Przykładowy link z Wiki
                 value: "4.5T Gems",
                 gold: "12T Gems",
                 diamond: "18T Gems",
@@ -210,6 +238,7 @@
                 name: "Huge Hell Rock",
                 category: "Huge",
                 tagClass: "cat-huge",
+                img: "", // Zostaw puste, jeśli nie masz jeszcze zdjęcia (pokaże się ikona zastępcza 🐾)
                 value: "60B Gems",
                 gold: "180B Gems",
                 diamond: "290B Gems",
@@ -219,6 +248,7 @@
                 name: "Titanic Hippomelon",
                 category: "Titanic",
                 tagClass: "cat-titanic",
+                img: "", 
                 value: "25T Gems",
                 gold: "70T Gems",
                 diamond: "110T Gems",
@@ -228,6 +258,7 @@
                 name: "Titanic Hubert",
                 category: "Titanic",
                 tagClass: "cat-titanic",
+                img: "", 
                 value: "40T Gems",
                 gold: "120T Gems",
                 diamond: "190T Gems",
@@ -242,17 +273,26 @@
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'pet-card';
+                
+                // Sprawdzanie czy obrazek istnieje w bazie
+                const imageHTML = item.img 
+                    ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
+                    : `<div class="pet-image-placeholder">🐾</div>`;
+
                 card.innerHTML = `
+                    <div class="pet-image-container">
+                        ${imageHTML}
+                    </div>
                     <div class="pet-header">
                         <span class="pet-name">${item.name}</span>
                         <span class="pet-category ${item.tagClass}">${item.category}</span>
                     </div>
                     <div class="stat-row">
-                        <span class="stat-label">Zwykły (Normal):</span>
+                        <span class="stat-label">Normal Value:</span>
                         <span class="stat-value value-gems">${item.value}</span>
                     </div>
                     
-                    <div class="mutations-title">Mutacje (Wartość):</div>
+                    <div class="mutations-title">Mutations:</div>
                     
                     <div class="mutation-row">
                         <span class="m-gold">💛 Gold:</span>
@@ -271,7 +311,7 @@
             });
         }
 
-        // Szukajka
+        // Search engine
         document.getElementById('search').addEventListener('input', (e) => {
             const searchWord = e.target.value.toLowerCase();
             const filtered = database.filter(item => 
@@ -280,7 +320,7 @@
             displayItems(filtered);
         });
 
-        // Filtry kategorii
+        // Category filter
         function filterCategory(category) {
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -297,7 +337,7 @@
             }
         }
 
-        // Start strony
+        // Initialize
         displayItems(database);
     </script>
 </body>
