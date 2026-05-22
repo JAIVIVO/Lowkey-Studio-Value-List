@@ -9,6 +9,7 @@
             --bg-dark: #0f172a;
             --card-bg: #1e293b;
             --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             
@@ -88,6 +89,18 @@
             color: white;
         }
 
+        /* Styl dla przycisku HELP */
+        .btn-help {
+            background: #374151;
+            color: #f3f4f6;
+            border: 1px solid #4b5563;
+        }
+        .btn-help:hover, .btn-help.active {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
         .items-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -105,14 +118,14 @@
             transition: transform 0.2s;
             display: flex;
             flex-direction: column;
-            position: relative; /* Ważne dla pozycjonowania płomienia w rogu */
+            position: relative;
         }
 
         .pet-card:hover {
             transform: translateY(-5px);
         }
 
-        /* EFEKT PŁONĄCEGO OGNIA W ROGU KARTY */
+        /* STYL ANIMOWANEGO OGNIWA W ROGU KARTY */
         .corner-fire {
             position: absolute;
             top: 12px;
@@ -172,7 +185,7 @@
         .pet-name {
             font-size: 1.3rem;
             font-weight: bold;
-            padding-right: 25px; /* Przestrzeń, żeby nazwa nie nachodziła na płomień */
+            padding-right: 25px;
         }
 
         .pet-category {
@@ -227,6 +240,64 @@
         .m-gold { color: var(--gold); }
         .m-diamond { color: var(--diamond); }
         .m-rainbow { color: var(--rainbow); }
+
+        /* STYL PODSTRONY HELP */
+        .help-page {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border: 2px dashed #4b5563;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            display: none; /* Domyślnie ukryta */
+        }
+
+        .help-title {
+            font-size: 2rem;
+            color: #ef4444;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .help-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #f3f4f6;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        .help-highlight {
+            color: #38bdf8;
+            background: #0f172a;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .discord-btn {
+            display: inline-block;
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .discord-btn:hover {
+            background: #4752C4;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+        }
     </style>
 </head>
 <body>
@@ -238,15 +309,24 @@
 
     <div class="controls">
         <input type="text" id="search" class="search-bar" placeholder="Search pet...">
-        <button class="filter-btn active" onclick="filterCategory('all', event)">All Pets</button>
-        <button class="filter-btn" onclick="filterCategory('Titanic', event)">Titanic</button>
-        <button class="filter-btn" onclick="filterCategory('Huge', event)">Huge</button>
+        <button class="filter-btn active" id="btn-all" onclick="filterCategory('all', event)">All Pets</button>
+        <button class="filter-btn" id="btn-titanic" onclick="filterCategory('Titanic', event)">Titanic</button>
+        <button class="filter-btn" id="btn-huge" onclick="filterCategory('Huge', event)">Huge</button>
+        <button class="filter-btn btn-help" id="btn-help" onclick="showHelpPage(event)">HELP PAGE</button>
     </div>
 
     <main class="items-grid" id="itemsContainer"></main>
 
+    <div class="help-page" id="helpPageContainer">
+        <h2 class="help-title">Help Page</h2>
+        <p class="help-text">
+            IF YOU KNOW ANY PET THAT IS NOT ON THE WEBSITE OR YOU KNOW THE PRICE OF ANY PET THAT IS NOT ON THE WEBSITE, WRITE IT TO <span class="help-highlight">@jaivivo_oficial</span> ON DISCORD LOWKEY STUDIO
+        </p>
+        <a href="https://discord.gg/lowkeypsx" target="_blank" class="discord-btn">DISCORD</a>
+    </div>
+
     <script>
-        // --- TWOJA BAZA DANYCH ---
+        // --- BAZA DANYCH ---
         const database = [
             {
                 name: "Titanic Lovemelon",
@@ -450,9 +530,7 @@
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 
-                // Płomyk renderuje się w rogu tylko gdy isHot wynosi true
                 const fireHTML = item.isHot ? `<div class="corner-fire" title="Hot Deal!">🔥</div>` : '';
-                
                 const imageHTML = item.img 
                     ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
                     : `<div class="pet-image-placeholder">🐾</div>`;
@@ -492,6 +570,10 @@
 
         // Wyszukiwarka
         document.getElementById('search').addEventListener('input', (e) => {
+            // Jeśli użytkownik zacznie pisać, automatycznie wracamy do widoku petów
+            document.getElementById('helpPageContainer').style.display = 'none';
+            document.getElementById('itemsContainer').style.display = 'grid';
+            
             const searchWord = e.target.value.toLowerCase();
             const filtered = database.filter(item => 
                 item.name.toLowerCase().includes(searchWord)
@@ -499,8 +581,12 @@
             displayItems(filtered);
         });
 
-        // Filtrowanie kategorii
+        // Filtrowanie kategorii petów
         function filterCategory(category, event) {
+            // Ukrywamy Help Page i pokazujemy siatkę petów
+            document.getElementById('helpPageContainer').style.display = 'none';
+            document.getElementById('itemsContainer').style.display = 'grid';
+
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             
@@ -513,6 +599,22 @@
             } else {
                 const filtered = database.filter(item => item.category === category);
                 displayItems(filtered);
+            }
+        }
+
+        // Funkcja pokazująca sekcję HELP PAGE
+        function showHelpPage(event) {
+            // Ukrywamy siatkę z petami
+            document.getElementById('itemsContainer').style.display = 'none';
+            // Pokazujemy kontener z tekstem pomocy
+            document.getElementById('helpPageContainer').style.display = 'block';
+
+            // Zmiana aktywności przycisków
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if(event && event.target) {
+                event.target.classList.add('active');
             }
         }
 
