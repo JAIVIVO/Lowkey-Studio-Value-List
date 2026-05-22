@@ -212,3 +212,523 @@
         }
 
         .pet-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding-right: 25px;
+        }
+
+        .pet-category {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .cat-titanic { background: #ec4899; color: white; }
+        .cat-huge { background: #a855f7; color: white; }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .stat-label { color: var(--text-muted); }
+        .stat-value { font-weight: 600; }
+        .value-gems { color: #f59e0b; font-weight: bold; }
+
+        /* --- MIENIĄCY SIĘ HOLOGRAFICZNY KONTENER MUTACJI --- */
+        .mutations-container {
+            background: linear-gradient(125deg, #1e293b 0%, #2e3d52 40%, #475569 50%, #2e3d52 60%, #1e293b 100%);
+            background-size: 300% 300%;
+            animation: holo-shine 6s ease infinite;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.03);
+        }
+
+        @keyframes holo-shine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .mutations-title {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 3px;
+        }
+
+        .mutation-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        .m-gold { color: var(--gold); text-shadow: 0 0 4px rgba(234, 179, 8, 0.2); }
+        .m-diamond { color: var(--diamond); text-shadow: 0 0 4px rgba(56, 189, 248, 0.2); }
+        .m-rainbow { color: var(--rainbow); text-shadow: 0 0 4px rgba(236, 72, 153, 0.2); }
+
+        /* PODSTRONA HELP */
+        .help-page {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border: 2px dashed #4b5563;
+            border-radius: 16px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .help-title {
+            font-size: 2.2rem;
+            color: #ef4444;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .help-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #f3f4f6;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .help-highlight {
+            color: #38bdf8;
+            background: #0f172a;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .discord-btn {
+            display: inline-block;
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 16px 50px;
+            border-radius: 12px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .discord-btn:hover {
+            background: #4752C4;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <span class="nav-item active" id="nav-values" onclick="switchTab('values')">Value</span>
+        <span class="nav-item" id="nav-help" onclick="switchTab('help')">HELP PAGE</span>
+    </nav>
+
+    <header>
+        <h1>PSX OG Value List</h1>
+        <p>Live marketplace values for Pet Simulator X OG — Titanic & Huge</p>
+    </header>
+
+    <div id="tab-values-content" class="values-section">
+        <div class="controls">
+            <input type="text" id="search" class="search-bar" placeholder="Search pet...">
+            <button class="filter-btn active" id="filter-all" onclick="filterCategory('all')">All Pets</button>
+            <button class="filter-btn" id="filter-titanic" onclick="filterCategory('Titanic')">Titanic</button>
+            <button class="filter-btn" id="filter-huge" onclick="filterCategory('Huge')">Huge</button>
+            <button class="filter-btn" id="filter-hot" onclick="filterCategory('HOT')">HOT 🔥</button>
+        </div>
+        <main class="items-grid" id="itemsContainer"></main>
+    </div>
+
+    <div id="tab-help-content" class="help-page">
+        <h2 class="help-title">Help Page</h2>
+        <p class="help-text">
+            IF YOU KNOW ANY PET THAT IS NOT ON THE WEBSITE OR YOU KNOW THE PRICE OF ANY PET THAT IS NOT ON THE WEBSITE, WRITE IT TO <span class="help-highlight">@jaivivo_oficial</span> ON DISCORD LOWKEY STUDIO
+        </p>
+        <a href="https://discord.gg/lowkeypsx" target="_blank" class="discord-btn">DISCORD</a>
+    </div>
+
+    <script>
+        const database = [
+            {
+                name: "Titanic Lovemelon",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Lovemelon.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Emoji Corgi",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Emoji Corgi.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Hubert",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Hubert.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Jolly Cat",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Jolly Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Silver Dragon",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Silver Dragon.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Banana Cat",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Banana Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Nightmare Cat",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Nightmare Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Atlantean Jellyfish",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Atlantean Jellyfish.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Blobfish",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Blobfish.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Dominus Astra",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Dominus Astra.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Dog",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Dog.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Present Chest Mimic",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Present Chest Mimic.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Grinch Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Grinch Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Heart Balloon Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Heart Balloon Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Valentine's Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Valentine's Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Doodle Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Doodle Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Hippomelon",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Hippomelon.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Strawberry Corgi",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Strawberry Corgi.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Holiday Pegasus",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Holiday Pegasus.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Peppermint Angelus",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Peppermint Angelus.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Piñata Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Piñata Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Nightmare Kraken",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Nightmare Kraken.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Nightmare Spirit",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Nightmare Spirit.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Pop Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Pop Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Knife Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Knife Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Axolotl",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Axolotl.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Emoji Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Emoji Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Emoji Monkey",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Emoji Monkey.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Santa Paws",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Santa Paws.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Festive Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Festive Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            }
+        ];
+        
+        let currentCategory = 'all';
+
+        function displayItems(items) {
+            const container = document.getElementById('itemsContainer');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'pet-card';
+                
+                const fireHTML = item.isHot ? `<div class="corner-fire">🔥</div>` : '';
+                const imageHTML = item.img 
+                    ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
+                    : `<div class="pet-image-placeholder">🐾</div>`;
+
+                card.innerHTML = `
+                    ${fireHTML}
+                    <div class="pet-image-container">
+                        ${imageHTML}
+                    </div>
+                    <div class="pet-header">
+                        <span class="pet-name">${item.name}</span>
+                        <span class="pet-category ${item.tagClass}">${item.category}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Normal Value:</span>
+                        <span class="stat-value value-gems">${item.value}</span>
+                    </div>
+                    
+                    <div class="mutations-container">
+                        <div class="mutations-title">Mutations:</div>
+                        <div class="mutation-row">
+                            <span class="m-gold">💛 Gold:</span>
+                            <span class="stat-value">${item.gold}</span>
+                        </div>
+                        <div class="mutation-row">
+                            <span class="m-diamond">💎 Diamond:</span>
+                            <span class="stat-value">${item.diamond}</span>
+                        </div>
+                        <div class="mutation-row">
+                            <span class="m-rainbow">🌈 Rainbow:</span>
+                            <span class="stat-value">${item.rainbow}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function switchTab(tabName) {
+            const navValues = document.getElementById('nav-values');
+            const navHelp = document.getElementById('nav-help');
+            const contentValues = document.getElementById('tab-values-content');
+            const contentHelp = document.getElementById('tab-help-content');
+
+            if (tabName === 'values') {
+                navValues.classList.add('active');
+                navHelp.classList.remove('active');
+                contentValues.style.display = 'block';
+                contentHelp.style.display = 'none';
+                filterCategory(currentCategory);
+            } else if (tabName === 'help') {
+                navHelp.classList.add('active');
+                navValues.classList.remove('active');
+                contentValues.style.display = 'none';
+                contentHelp.style.display = 'block';
+            }
+        }
+
+        document.getElementById('search').addEventListener('input', (e) => {
+            const searchWord = e.target.value.toLowerCase();
+            const filtered = database.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchWord);
+                
+                let matchesCategory = false;
+                if (currentCategory === 'all') {
+                    matchesCategory = true;
+                } else if (currentCategory === 'HOT') {
+                    matchesCategory = item.isHot === true;
+                } else {
+                    matchesCategory = item.category === currentCategory;
+                }
+                
+                return matchesSearch && matchesCategory;
+            });
+            displayItems(filtered);
+        });
+
+        function filterCategory(category) {
+            currentCategory = category;
+            const buttons = document.querySelectorAll('.controls .filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${category.toLowerCase()}`).classList.add('active');
+            document.getElementById('search').value = '';
+
+            if (category === 'all') {
+                displayItems(database);
+            } else if (category === 'HOT') {
+                const filtered = database.filter(item => item.isHot === true);
+                displayItems(filtered);
+            } else {
+                const filtered = database.filter(item => item.category === category);
+                displayItems(filtered);
+            }
+        }
+
+        displayItems(database);
+    </script>
+</body>
+</html>
