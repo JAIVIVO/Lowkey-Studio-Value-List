@@ -105,13 +105,38 @@
             transition: transform 0.2s;
             display: flex;
             flex-direction: column;
+            position: relative; /* Wymagane, żeby znaczek ognia trzymał się rogu karty */
         }
 
         .pet-card:hover {
             transform: translateY(-5px);
         }
 
-        /* Pet Image Styling */
+        /* STYL PŁONĄCEGO ZNACZKA W ROGU KARTY */
+        .corner-fire {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1.8rem;
+            z-index: 10;
+            filter: drop-shadow(0 0 8px #f97316);
+            animation: fire-burn 0.4s infinite alternate ease-in-out;
+            cursor: default;
+            user-select: none;
+        }
+
+        /* Animacja migotania i pulsowania ognia */
+        @keyframes fire-burn {
+            0% {
+                transform: scale(1) rotate(-2deg);
+                filter: drop-shadow(0 0 6px #ef4444);
+            }
+            100% {
+                transform: scale(1.15) rotate(3deg) translateY(-2px);
+                filter: drop-shadow(0 0 12px #f97316);
+            }
+        }
+
         .pet-image-container {
             width: 100%;
             height: 150px;
@@ -148,6 +173,7 @@
         .pet-name {
             font-size: 1.3rem;
             font-weight: bold;
+            padding-right: 25px; /* Przestrzeń, żeby nazwa nie najechała na ogień */
         }
 
         .pet-category {
@@ -222,7 +248,7 @@
         </main>
 
     <script>
-// --- PET DATABASE (STABLE & TESTED WIKI LINKS) ---
+// --- PET DATABASE ---
         const database = [
               {
                 name: "Titanic Hippomelon",
@@ -232,7 +258,8 @@
                 value: "25T Gems",
                 gold: "70T Gems",
                 diamond: "110T Gems",
-                rainbow: "200T Gems"
+                rainbow: "200T Gems",
+                isHot: false
             },
             {
                 name: "Titanic Hubert",
@@ -242,7 +269,8 @@
                 value: "40T Gems",
                 gold: "120T Gems",
                 diamond: "190T Gems",
-                rainbow: "380T Gems"
+                rainbow: "380T Gems",
+                isHot: false
             },
             {
                 name: "Huge Cat",
@@ -252,7 +280,8 @@
                 value: "4.5T Gems",
                 gold: "12T Gems",
                 diamond: "18T Gems",
-                rainbow: "35T Gems"
+                rainbow: "35T Gems",
+                isHot: true // Huge Cat się pali! 🔥
             },
             {
                 name: "Huge Hell Rock",
@@ -262,7 +291,8 @@
                 value: "60B Gems",
                 gold: "180B Gems",
                 diamond: "290B Gems",
-                rainbow: "550B Gems"
+                rainbow: "550B Gems",
+                isHot: true // Huge Hell Rock się pali! 🔥
             }
         ];
         
@@ -274,12 +304,15 @@
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 
-                // Sprawdzanie czy obrazek istnieje w bazie
+                // Generowanie płonącego znaczka tylko, jeśli isHot to true
+                const fireHTML = item.isHot ? `<div class="corner-fire" title="Hot Deal!">🔥</div>` : '';
+                
                 const imageHTML = item.img 
                     ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
                     : `<div class="pet-image-placeholder">🐾</div>`;
 
                 card.innerHTML = `
+                    ${fireHTML}
                     <div class="pet-image-container">
                         ${imageHTML}
                     </div>
