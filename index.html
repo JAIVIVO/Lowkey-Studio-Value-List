@@ -105,14 +105,14 @@
             transition: transform 0.2s;
             display: flex;
             flex-direction: column;
-            position: relative; /* Wymagane, żeby płomień trzymał się rogu karty */
+            position: relative; /* Ważne dla pozycjonowania płomienia w rogu */
         }
 
         .pet-card:hover {
             transform: translateY(-5px);
         }
 
-        /* STYL ANIMOWANEGO OGNIWA W ROGU KARTY */
+        /* EFEKT PŁONĄCEGO OGNIA W ROGU KARTY */
         .corner-fire {
             position: absolute;
             top: 12px;
@@ -172,7 +172,7 @@
         .pet-name {
             font-size: 1.3rem;
             font-weight: bold;
-            padding-right: 25px; /* Zapobiega nakładaniu się długich nazw na płomień */
+            padding-right: 25px; /* Przestrzeń, żeby nazwa nie nachodziła na płomień */
         }
 
         .pet-category {
@@ -194,4 +194,330 @@
         }
 
         .stat-label {
-            color: var(--text-muted
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-weight: 600;
+        }
+
+        .value-gems {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        /* Sekcja mutacji */
+        .mutations-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mutation-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .m-gold { color: var(--gold); }
+        .m-diamond { color: var(--diamond); }
+        .m-rainbow { color: var(--rainbow); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PSX OG Value List</h1>
+        <p>Live marketplace values for Pet Simulator X OG — Titanic & Huge</p>
+    </header>
+
+    <div class="controls">
+        <input type="text" id="search" class="search-bar" placeholder="Search pet...">
+        <button class="filter-btn active" onclick="filterCategory('all', event)">All Pets</button>
+        <button class="filter-btn" onclick="filterCategory('Titanic', event)">Titanic</button>
+        <button class="filter-btn" onclick="filterCategory('Huge', event)">Huge</button>
+    </div>
+
+    <main class="items-grid" id="itemsContainer"></main>
+
+    <script>
+        // --- TWOJA BAZA DANYCH ---
+        const database = [
+            {
+                name: "Titanic Lovemelon",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Lovemelon.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Emoji Corgi",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Emoji Corgi.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Titanic Hubert",
+                category: "Titanic",
+                tagClass: "cat-titanic",
+                img: "Titanic Hubert.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Dog",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Dog.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Present Chest Mimic",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Present Chest Mimic.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Grinch Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Grinch Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Heart Balloon Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Heart Balloon Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Valentine's Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Valentine's Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Doodle Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Doodle Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Hippomelon",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Hippomelon.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Strawberry Corgi",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Strawberry Corgi.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Holiday Pegasus",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Holiday Pegasus.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Peppermint Angelus",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Peppermint Angelus.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Piñata Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Piñata Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Nightmare Kraken",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Nightmare Kraken.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Nightmare Spirit",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Nightmare Spirit.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Pop Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Pop Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Knife Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Knife Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Axolotl",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Axolotl.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Emoji Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Emoji Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Emoji Monkey",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Emoji Monkey.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            },
+            {
+                name: "Huge Santa Paws",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Santa Paws.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: false
+            },
+            {
+                name: "Huge Festive Cat",
+                category: "Huge",
+                tagClass: "cat-huge",
+                img: "Huge Festive Cat.png", 
+                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                isHot: true
+            }
+        ];
+        
+        function displayItems(items) {
+            const container = document.getElementById('itemsContainer');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'pet-card';
+                
+                // Płomyk renderuje się w rogu tylko gdy isHot wynosi true
+                const fireHTML = item.isHot ? `<div class="corner-fire" title="Hot Deal!">🔥</div>` : '';
+                
+                const imageHTML = item.img 
+                    ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
+                    : `<div class="pet-image-placeholder">🐾</div>`;
+
+                card.innerHTML = `
+                    ${fireHTML}
+                    <div class="pet-image-container">
+                        ${imageHTML}
+                    </div>
+                    <div class="pet-header">
+                        <span class="pet-name">${item.name}</span>
+                        <span class="pet-category ${item.tagClass}">${item.category}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Normal Value:</span>
+                        <span class="stat-value value-gems">${item.value}</span>
+                    </div>
+                    
+                    <div class="mutations-title">Mutations:</div>
+                    
+                    <div class="mutation-row">
+                        <span class="m-gold">💛 Gold:</span>
+                        <span class="stat-value">${item.gold}</span>
+                    </div>
+                    <div class="mutation-row">
+                        <span class="m-diamond">💎 Diamond:</span>
+                        <span class="stat-value">${item.diamond}</span>
+                    </div>
+                    <div class="mutation-row">
+                        <span class="m-rainbow">🌈 Rainbow:</span>
+                        <span class="stat-value">${item.rainbow}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Wyszukiwarka
+        document.getElementById('search').addEventListener('input', (e) => {
+            const searchWord = e.target.value.toLowerCase();
+            const filtered = database.filter(item => 
+                item.name.toLowerCase().includes(searchWord)
+            );
+            displayItems(filtered);
+        });
+
+        // Filtrowanie kategorii
+        function filterCategory(category, event) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if(event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            if(category === 'all') {
+                displayItems(database);
+            } else {
+                const filtered = database.filter(item => item.category === category);
+                displayItems(filtered);
+            }
+        }
+
+        // Start aplikacji
+        displayItems(database);
+    </script>
+</body>
+</html>
