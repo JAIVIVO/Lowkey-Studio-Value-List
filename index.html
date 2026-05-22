@@ -9,7 +9,6 @@
             --bg-dark: #0f172a;
             --card-bg: #1e293b;
             --accent-blue: #3b82f6;
-            --accent-green: #22c55e;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             
@@ -29,7 +28,45 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            padding: 20px;
+            padding: 0 20px 20px 20px;
+        }
+
+        /* --- PASEK NAWIGACJI PODOBNY DO TWÓJ_WZRÓR --- */
+        .top-navbar {
+            background: #111827;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 15px 0;
+            border-bottom: 2px solid #1f2937;
+            margin-bottom: 30px;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .nav-item {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            padding-bottom: 5px;
+            border-bottom: 3px solid transparent;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        .nav-item.active {
+            color: #60a5fa;
+            border-color: #3b82f6;
         }
 
         header {
@@ -47,6 +84,10 @@
 
         header p {
             color: var(--text-muted);
+        }
+
+        .values-section {
+            display: block;
         }
 
         .controls {
@@ -89,18 +130,6 @@
             color: white;
         }
 
-        /* Styl dla przycisku HELP */
-        .btn-help {
-            background: #374151;
-            color: #f3f4f6;
-            border: 1px solid #4b5563;
-        }
-        .btn-help:hover, .btn-help.active {
-            background: #ef4444;
-            border-color: #ef4444;
-            color: white;
-        }
-
         .items-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -125,7 +154,6 @@
             transform: translateY(-5px);
         }
 
-        /* STYL ANIMOWANEGO OGNIWA W ROGU KARTY */
         .corner-fire {
             position: absolute;
             top: 12px;
@@ -139,14 +167,8 @@
         }
 
         @keyframes fire-burn {
-            0% {
-                transform: scale(1) rotate(-2deg);
-                filter: drop-shadow(0 0 6px #ef4444);
-            }
-            100% {
-                transform: scale(1.15) rotate(3deg) translateY(-2px);
-                filter: drop-shadow(0 0 12px #f97316);
-            }
+            0% { transform: scale(1) rotate(-2deg); filter: drop-shadow(0 0 6px #ef4444); }
+            100% { transform: scale(1.15) rotate(3deg) translateY(-2px); filter: drop-shadow(0 0 12px #f97316); }
         }
 
         .pet-image-container {
@@ -206,20 +228,10 @@
             border-bottom: 1px solid #334155;
         }
 
-        .stat-label {
-            color: var(--text-muted);
-        }
+        .stat-label { color: var(--text-muted); }
+        .stat-value { font-weight: 600; }
+        .value-gems { color: #f59e0b; font-weight: bold; }
 
-        .stat-value {
-            font-weight: 600;
-        }
-
-        .value-gems {
-            color: #f59e0b;
-            font-weight: bold;
-        }
-
-        /* Sekcja mutacji */
         .mutations-title {
             font-size: 0.9rem;
             color: var(--text-muted);
@@ -241,41 +253,42 @@
         .m-diamond { color: var(--diamond); }
         .m-rainbow { color: var(--rainbow); }
 
-        /* STYL PODSTRONY HELP */
+        /* PODSTRONA HELP */
         .help-page {
             max-width: 800px;
             margin: 40px auto;
             background: var(--card-bg);
             border: 2px dashed #4b5563;
             border-radius: 16px;
-            padding: 40px 20px;
+            padding: 50px 30px;
             text-align: center;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            display: none; /* Domyślnie ukryta */
+            display: none;
         }
 
         .help-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #ef4444;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .help-text {
-            font-size: 1.25rem;
-            line-height: 1.6;
+            font-size: 1.3rem;
+            line-height: 1.7;
             color: #f3f4f6;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
             font-weight: 500;
         }
 
         .help-highlight {
             color: #38bdf8;
             background: #0f172a;
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 3px 10px;
+            border-radius: 6px;
             font-family: monospace;
+            font-weight: bold;
         }
 
         .discord-btn {
@@ -283,10 +296,10 @@
             background: #5865F2;
             color: white;
             text-decoration: none;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            padding: 15px 40px;
-            border-radius: 10px;
+            padding: 16px 50px;
+            border-radius: 12px;
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
             text-transform: uppercase;
@@ -302,22 +315,27 @@
 </head>
 <body>
 
+    <nav class="top-navbar">
+        <span class="nav-item active" id="nav-values" onclick="switchTab('values')">Value</span>
+        <span class="nav-item" id="nav-help" onclick="switchTab('help')">HELP PAGE</span>
+    </nav>
+
     <header>
         <h1>PSX OG Value List</h1>
         <p>Live marketplace values for Pet Simulator X OG — Titanic & Huge</p>
     </header>
 
-    <div class="controls">
-        <input type="text" id="search" class="search-bar" placeholder="Search pet...">
-        <button class="filter-btn active" id="btn-all" onclick="filterCategory('all', event)">All Pets</button>
-        <button class="filter-btn" id="btn-titanic" onclick="filterCategory('Titanic', event)">Titanic</button>
-        <button class="filter-btn" id="btn-huge" onclick="filterCategory('Huge', event)">Huge</button>
-        <button class="filter-btn btn-help" id="btn-help" onclick="showHelpPage(event)">HELP PAGE</button>
+    <div id="tab-values-content" class="values-section">
+        <div class="controls">
+            <input type="text" id="search" class="search-bar" placeholder="Search pet...">
+            <button class="filter-btn active" id="filter-all" onclick="filterCategory('all')">All Pets</button>
+            <button class="filter-btn" id="filter-titanic" onclick="filterCategory('Titanic')">Titanic</button>
+            <button class="filter-btn" id="filter-huge" onclick="filterCategory('Huge')">Huge</button>
+        </div>
+        <main class="items-grid" id="itemsContainer"></main>
     </div>
 
-    <main class="items-grid" id="itemsContainer"></main>
-
-    <div class="help-page" id="helpPageContainer">
+    <div id="tab-help-content" class="help-page">
         <h2 class="help-title">Help Page</h2>
         <p class="help-text">
             IF YOU KNOW ANY PET THAT IS NOT ON THE WEBSITE OR YOU KNOW THE PRICE OF ANY PET THAT IS NOT ON THE WEBSITE, WRITE IT TO <span class="help-highlight">@jaivivo_oficial</span> ON DISCORD LOWKEY STUDIO
@@ -326,7 +344,7 @@
     </div>
 
     <script>
-        // --- BAZA DANYCH ---
+        // --- ORYGINALNA BAZA DANYCH BEZ ZMIAN ---
         const database = [
             {
                 name: "Titanic Lovemelon",
@@ -522,6 +540,8 @@
             }
         ];
         
+        let currentCategory = 'all';
+
         function displayItems(items) {
             const container = document.getElementById('itemsContainer');
             container.innerHTML = '';
@@ -530,7 +550,7 @@
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 
-                const fireHTML = item.isHot ? `<div class="corner-fire" title="Hot Deal!">🔥</div>` : '';
+                const fireHTML = item.isHot ? `<div class="corner-fire">🔥</div>` : '';
                 const imageHTML = item.img 
                     ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
                     : `<div class="pet-image-placeholder">🐾</div>`;
@@ -568,31 +588,42 @@
             });
         }
 
-        // Wyszukiwarka
+        function switchTab(tabName) {
+            const navValues = document.getElementById('nav-values');
+            const navHelp = document.getElementById('nav-help');
+            const contentValues = document.getElementById('tab-values-content');
+            const contentHelp = document.getElementById('tab-help-content');
+
+            if (tabName === 'values') {
+                navValues.classList.add('active');
+                navHelp.classList.remove('active');
+                contentValues.style.display = 'block';
+                contentHelp.style.display = 'none';
+                filterCategory(currentCategory);
+            } else if (tabName === 'help') {
+                navHelp.classList.add('active');
+                navValues.classList.remove('active');
+                contentValues.style.display = 'none';
+                contentHelp.style.display = 'block';
+            }
+        }
+
         document.getElementById('search').addEventListener('input', (e) => {
-            // Jeśli użytkownik zacznie pisać, automatycznie wracamy do widoku petów
-            document.getElementById('helpPageContainer').style.display = 'none';
-            document.getElementById('itemsContainer').style.display = 'grid';
-            
             const searchWord = e.target.value.toLowerCase();
-            const filtered = database.filter(item => 
-                item.name.toLowerCase().includes(searchWord)
-            );
+            const filtered = database.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchWord);
+                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
             displayItems(filtered);
         });
 
-        // Filtrowanie kategorii petów
-        function filterCategory(category, event) {
-            // Ukrywamy Help Page i pokazujemy siatkę petów
-            document.getElementById('helpPageContainer').style.display = 'none';
-            document.getElementById('itemsContainer').style.display = 'grid';
-
-            const buttons = document.querySelectorAll('.filter-btn');
+        function filterCategory(category) {
+            currentCategory = category;
+            const buttons = document.querySelectorAll('.controls .filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            
-            if(event && event.target) {
-                event.target.classList.add('active');
-            }
+            document.getElementById(`filter-${category.toLowerCase()}`).classList.add('active');
+            document.getElementById('search').value = '';
 
             if(category === 'all') {
                 displayItems(database);
@@ -602,23 +633,6 @@
             }
         }
 
-        // Funkcja pokazująca sekcję HELP PAGE
-        function showHelpPage(event) {
-            // Ukrywamy siatkę z petami
-            document.getElementById('itemsContainer').style.display = 'none';
-            // Pokazujemy kontener z tekstem pomocy
-            document.getElementById('helpPageContainer').style.display = 'block';
-
-            // Zmiana aktywności przycisków
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            if(event && event.target) {
-                event.target.classList.add('active');
-            }
-        }
-
-        // Start aplikacji
         displayItems(database);
     </script>
 </body>
