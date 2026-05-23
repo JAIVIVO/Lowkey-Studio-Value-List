@@ -169,8 +169,10 @@
         }
 
         @keyframes fire-burn {
-            0% { transform: scale(1) rotate(-2deg); filter: drop-shadow(0 0 6px #ef4444); }
-            100% { transform: scale(1.15) rotate(3deg) translateY(-2px); filter: drop-shadow(0 0 12px #f97316); }
+            0% { transform: scale(1) rotate(-2deg);
+            filter: drop-shadow(0 0 6px #ef4444); }
+            100% { transform: scale(1.15) rotate(3deg) translateY(-2px);
+            filter: drop-shadow(0 0 12px #f97316); }
         }
 
         .pet-image-container {
@@ -220,8 +222,10 @@
             border-radius: 6px;
         }
 
-        .cat-titanic { background: #ec4899; color: white; }
-        .cat-huge { background: #a855f7; color: white; }
+        .cat-titanic { background: #ec4899;
+        color: white; }
+        .cat-huge { background: #a855f7; color: white;
+        }
 
         .stat-row {
             display: flex;
@@ -230,9 +234,12 @@
             border-bottom: 1px solid #334155;
         }
 
-        .stat-label { color: var(--text-muted); }
-        .stat-value { font-weight: 600; }
-        .value-gems { color: #f59e0b; font-weight: bold; }
+        .stat-label { color: var(--text-muted);
+        }
+        .stat-value { font-weight: 600;
+        }
+        .value-gems { color: #f59e0b; font-weight: bold;
+        }
 
         .mutations-title {
             font-size: 0.9rem;
@@ -282,7 +289,8 @@
         }
 
         @keyframes text-shine {
-            to { background-position: 200% center; }
+            to { background-position: 200% center;
+            }
         }
 
         /* PODSTRONA HELP */
@@ -359,6 +367,7 @@
 
     <div id="tab-values-content" class="values-section">
         <div class="controls">
+          
             <input type="text" id="search" class="search-bar" placeholder="Search pet...">
             <button class="filter-btn active" id="filter-all" onclick="filterCategory('all')">All Pets</button>
             <button class="filter-btn" id="filter-titanic" onclick="filterCategory('Titanic')">Titanic</button>
@@ -369,6 +378,7 @@
     </div>
 
     <div id="tab-help-content" class="help-page">
+  
         <h2 class="help-title">Help Page</h2>
         <p class="help-text">
             IF YOU KNOW ANY PET THAT IS NOT ON THE WEBSITE OR YOU KNOW THE PRICE OF ANY PET THAT IS NOT ON THE WEBSITE, WRITE IT TO <span class="help-highlight">@jaivivo_oficial</span> ON DISCORD LOWKEY STUDIO
@@ -377,53 +387,62 @@
     </div>
 
     <script>
-        const database = [
+        const database = 
+        [
             {
                 name: "Titanic Jelly Cat",
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Jelly Cat.png", 
+               
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: true
             },
             {
                 name: "Titanic Bat Cat",
                 category: "Titanic",
+               
                 tagClass: "cat-titanic",
                 img: "Titanic Bat Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+              
                 name: "Titanic Lovemelon",
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Lovemelon.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+   
             },
             {
                 name: "Titanic Emoji Corgi",
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Emoji Corgi.png", 
+      
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Titanic Hubert",
                 category: "Titanic",
+       
                 tagClass: "cat-titanic",
                 img: "Titanic Hubert.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+       
                 name: "Titanic Jolly Cat",
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Jolly Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+           
                 isHot: false
             },
             {
@@ -436,12 +455,14 @@
             },
             {
                 name: "Titanic Banana Cat",
+              
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Banana Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
+        
             {
                 name: "Titanic Nightmare Cat",
                 category: "Titanic",
@@ -454,94 +475,110 @@
                 name: "Titanic Atlantean Jellyfish",
                 category: "Titanic",
                 tagClass: "cat-titanic",
+      
                 img: "Titanic Atlantean Jellyfish.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Titanic Dominus Astra",
+   
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Dominus Astra.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+         
             },
             {
                 name: "Huge Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Cat.png", 
+              
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Dog",
                 category: "Huge",
+               
                 tagClass: "cat-huge",
                 img: "Huge Dog.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+               
                 name: "Huge Chest Mimic",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Chest Mimic.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+  
             },
             {
                 name: "Huge Present Chest Mimic",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Present Chest Mimic.png", 
+   
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: true
             },
             {
                 name: "Huge Jelly Axolotl",
                 category: "Huge",
+   
                 tagClass: "cat-huge",
                 img: "Huge Jelly Axolotl.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: true
             },
             {
+  
                 name: "Huge Jelly Monkey",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Jelly Monkey.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+      
                 isHot: true
             },
             {
                 name: "Huge Pixel Dragon",
                 category: "Huge",
                 tagClass: "cat-huge",
+            
                 img: "Huge Pixel Dragon.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Jester Dog",
+         
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Jester Dog.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
+   
             {
                 name: "Huge Super Tiger",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Super Tiger.png", 
-                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                value: "N/A", 
+                gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Pixel Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
+ 
                 img: "Huge Pixel Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
@@ -553,93 +590,109 @@
                 img: "Huge Grinch Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: true
+    
             },
             {
                 name: "Huge Heart Balloon Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Heart Balloon Cat.png", 
+     
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Valentine's Cat",
                 category: "Huge",
+     
                 tagClass: "cat-huge",
                 img: "Huge Valentine's Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+    
                 name: "Huge Doodle Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Doodle Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+        
                 isHot: false
             },
             {
                 name: "Huge Hippomelon",
                 category: "Huge",
                 tagClass: "cat-huge",
+               
                 img: "Huge Hippomelon.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Strawberry Corgi",
+             
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Strawberry Corgi.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: true
             },
+       
             {
                 name: "Huge Holiday Pegasus",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Holiday Pegasus.png", 
-                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                value: "N/A", gold: "N/A", diamond: "N/A", 
+                rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Peppermint Angelus",
                 category: "Huge",
                 tagClass: "cat-huge",
+     
                 img: "Huge Peppermint Angelus.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Piñata Cat",
+  
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Piñata Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+        
             },
             {
                 name: "Huge Nightmare Kraken",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Nightmare Kraken.png", 
+           
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Nightmare Spirit",
                 category: "Huge",
+           
                 tagClass: "cat-huge",
                 img: "Huge Nightmare Spirit.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+          
                 name: "Huge Pop Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Pop Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+              
                 isHot: false
             },
             {
@@ -647,41 +700,48 @@
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Knife Cat.png", 
+ 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Axolotl",
                 category: "Huge",
+ 
                 tagClass: "cat-huge",
                 img: "Huge Axolotl.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+ 
                 name: "Huge Emoji Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Emoji Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+     
                 isHot: true
             },
             {
                 name: "Huge Emoji Monkey",
                 category: "Huge",
                 tagClass: "cat-huge",
+           
                 img: "Huge Emoji Monkey.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: true
             },
             {
                 name: "Huge Santa Paws",
+        
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Santa Paws.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
+  
             {
                 name: "Huge Festive Cat",
                 category: "Huge",
@@ -699,53 +759,62 @@
                 isHot: false
             },
             {
+                
                 name: "Huge Santa Monkey",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Santa Monkey.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+   
             },
             {
                 name: "Huge Techno Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Techno Cat.png", 
+      
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Hacked Cat",
                 category: "Huge",
+      
                 tagClass: "cat-huge",
                 img: "Huge Hacked Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+     
                 name: "Huge Atlantean Dolphin",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Atlantean Dolphin.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+         
                 isHot: false
             },
             {
                 name: "Huge Atlantean Orca",
                 category: "Huge",
                 tagClass: "cat-huge",
+               
                 img: "Huge Atlantean Orca.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Scary Corgi",
+            
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Scary Corgi.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
+      
             {
                 name: "Huge Scary Cat",
                 category: "Huge",
@@ -758,94 +827,110 @@
                 name: "Huge Storm Dominus",
                 category: "Huge",
                 tagClass: "cat-huge",
+    
                 img: "Huge Storm Dominus.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Inferno Dominus",
+ 
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Inferno Dominus.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+       
             },
             {
                 name: "Huge Floppa",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Floppa.png", 
+            
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Sleipnir",
                 category: "Huge",
+             
                 tagClass: "cat-huge",
                 img: "Huge Sleipnir.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+             
                 name: "Huge Capybara",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Capybara.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+  
             },
             {
                 name: "Huge Cyborg Capybara",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Cyborg Capybara.png", 
+     
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Anime Agony",
                 category: "Huge",
+     
                 tagClass: "cat-huge",
                 img: "Huge Anime Agony.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
+    
                 name: "Huge Anime Unicorn",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Anime Unicorn.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+        
                 isHot: false
             },
             {
                 name: "Huge Prickly Panda",
                 category: "Huge",
                 tagClass: "cat-huge",
+              
                 img: "Huge Prickly Panda.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Inferno Cat",
+           
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Inferno Cat.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
+     
             {
                 name: "Huge Gargoyle Dragon",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Gargoyle Dragon.png", 
-                value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
+                value: "N/A", gold: "N/A", 
+                diamond: "N/A", rainbow: "N/A",
                 isHot: false
             },
             {
                 name: "Huge Happy Rock",
                 category: "Huge",
                 tagClass: "cat-huge",
+   
                 img: "Huge Happy Rock.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
@@ -857,11 +942,11 @@
                 img: "Huge Dominus Darkwing.png", 
                 value: "N/A", gold: "N/A", diamond: "N/A", rainbow: "N/A",
                 isHot: false
+      
             }
         ];
         
         let currentCategory = 'all';
-
         function displayItems(items) {
             const container = document.getElementById('itemsContainer');
             container.innerHTML = '';
@@ -872,33 +957,39 @@
                 
                 const fireHTML = item.isHot ? `<div class="corner-fire">🔥</div>` : '';
                 const imageHTML = item.img 
-                    ? `<img src="${item.img}" alt="${item.name}" class="pet-image">`
+                    ? `<img src="images/${item.img}" alt="${item.name}" class="pet-image">`
                     : `<div class="pet-image-placeholder">🐾</div>`;
 
                 card.innerHTML = `
                     ${fireHTML}
+              
                     <div class="pet-image-container">
                         ${imageHTML}
                     </div>
                     <div class="pet-header">
                         <span class="pet-name">${item.name}</span>
+   
                         <span class="pet-category ${item.tagClass}">${item.category}</span>
                     </div>
                     <div class="stat-row">
                         <span class="stat-label">Normal Value:</span>
+          
                         <span class="stat-value value-gems">${item.value}</span>
                     </div>
                     
                     <div class="mutations-title">Mutations:</div>
                     
+   
                     <div class="mutation-row">
                         <span class="m-gold">💛 Gold:</span>
                         <span class="stat-value">${item.gold}</span>
                     </div>
+           
                     <div class="mutation-row">
                         <span class="m-diamond">💎 Diamond:</span>
                         <span class="stat-value">${item.diamond}</span>
                     </div>
+                   
                     <div class="mutation-row">
                         <span class="m-rainbow">🌈 Rainbow:</span>
                         <span class="stat-value">${item.rainbow}</span>
@@ -913,7 +1004,6 @@
             const navHelp = document.getElementById('nav-help');
             const contentValues = document.getElementById('tab-values-content');
             const contentHelp = document.getElementById('tab-help-content');
-
             if (tabName === 'values') {
                 navValues.classList.add('active');
                 navHelp.classList.remove('active');
@@ -933,6 +1023,7 @@
             const filtered = database.filter(item => {
                 const matchesSearch = item.name.toLowerCase().includes(searchWord);
                 
+       
                 let matchesCategory = false;
                 if (currentCategory === 'all') {
                     matchesCategory = true;
@@ -943,17 +1034,16 @@
                 }
                 
                 return matchesSearch && matchesCategory;
+       
             });
             displayItems(filtered);
         });
-
         function filterCategory(category) {
             currentCategory = category;
             const buttons = document.querySelectorAll('.controls .filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             document.getElementById(`filter-${category.toLowerCase()}`).classList.add('active');
             document.getElementById('search').value = '';
-
             if (category === 'all') {
                 displayItems(database);
             } else if (category === 'HOT') {
