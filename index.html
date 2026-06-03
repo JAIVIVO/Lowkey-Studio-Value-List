@@ -224,6 +224,7 @@
 
         .cat-titanic { background: #ec4899; color: white; }
         .cat-huge { background: #a855f7; color: white; }
+        .cat-exclusive { background: #06b6d4; color: white; } /* Kolor dla Exclusive */
 
         .stat-row {
             display: flex;
@@ -349,7 +350,7 @@
 
     <header>
         <h1>PSX OG Value List</h1>
-        <p>Live marketplace values for Pet Simulator X OG — Titanic & Huge</p>
+        <p>Live marketplace values for Pet Simulator X OG — Titanic, Huge & Exclusive</p>
     </header>
 
     <div id="tab-values-content" class="values-section">
@@ -358,6 +359,7 @@
             <button class="filter-btn active" id="filter-all" onclick="filterCategory('all')">All Pets</button>
             <button class="filter-btn" id="filter-titanic" onclick="filterCategory('Titanic')">Titanic</button>
             <button class="filter-btn" id="filter-huge" onclick="filterCategory('Huge')">Huge</button>
+            <button class="filter-btn" id="filter-exclusive" onclick="filterCategory('Exclusive')">Exclusive</button>
             <button class="filter-btn" id="filter-hot" onclick="filterCategory('HOT')">HOT 🔥</button>
         </div>
         <main class="items-grid" id="itemsContainer"></main>
@@ -390,6 +392,15 @@
                 img: "Huge Diamond Festive Cat.png", 
                 value: "N/A", gold: "N/A", rainbow: "N/A",
                 isHot: false
+            },
+
+            {
+                name: "Exclusive Doge",
+                category: "Exclusive",
+                tagClass: "cat-exclusive",
+                img: "Exclusive Doge.png", 
+                value: "N/A", gold: "N/A", rainbow: "N/A",
+                isHot: true
             }
         ];
 
