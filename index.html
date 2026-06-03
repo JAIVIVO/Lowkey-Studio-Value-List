@@ -24,6 +24,9 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- PASEK NAWIGACJI PODOBNY DO TWÓJ_WZRÓR --- */
@@ -83,6 +86,7 @@
 
         .values-section {
             display: block;
+            flex: 1;
         }
 
         .controls {
@@ -125,13 +129,6 @@
             color: white;
         }
 
-        /* Przycisk HOT ze specjalnym stylem ognia */
-        #filter-hot:hover, #filter-hot.active {
-            background: #f97316;
-            color: white;
-            box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
-        }
-
         .items-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -154,25 +151,6 @@
 
         .pet-card:hover {
             transform: translateY(-5px);
-        }
-
-        .corner-fire {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            font-size: 1.8rem;
-            z-index: 10;
-            filter: drop-shadow(0 0 8px #f97316);
-            animation: fire-burn 0.4s infinite alternate ease-in-out;
-            cursor: default;
-            user-select: none;
-        }
-
-        @keyframes fire-burn {
-            0% { transform: scale(1) rotate(-2deg);
-            filter: drop-shadow(0 0 6px #ef4444); }
-            100% { transform: scale(1.15) rotate(3deg) translateY(-2px);
-            filter: drop-shadow(0 0 12px #f97316); }
         }
 
         .pet-image-container {
@@ -224,7 +202,7 @@
 
         .cat-titanic { background: #ec4899; color: white; }
         .cat-huge { background: #a855f7; color: white; }
-        .cat-exclusive { background: #06b6d4; color: white; } /* Kolor dla Exclusive */
+        .cat-exclusive { background: #06b6d4; color: white; }
 
         .stat-row {
             display: flex;
@@ -263,14 +241,12 @@
             display: inline-block;
         }
 
-        /* Złote mienienie */
         .m-gold {
             background-image: linear-gradient(90deg, #eab308 0%, #fef08a 25%, #eab308 50%, #fef08a 75%, #eab308 100%);
             animation: text-shine 3s linear infinite;
             filter: drop-shadow(0 0 2px rgba(234, 179, 8, 0.3));
         }
 
-        /* Tęczowe mienienie (Rainbow) */
         .m-rainbow {
             background-image: linear-gradient(90deg, #ff0055, #00ffcc, #9900ff, #ffcc00, #ff0055);
             animation: text-shine 2s linear infinite;
@@ -292,6 +268,7 @@
             text-align: center;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
             display: none;
+            flex: 1;
         }
 
         .help-title {
@@ -339,6 +316,22 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
         }
+
+        /* --- STOPKA NA DOLE (FOOTER) --- */
+        .site-footer {
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #94a3b8;
+            border-top: 1px solid #1e293b;
+            width: 100%;
+        }
+
+        .site-footer .author-highlight {
+            color: #06b6d4;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -360,7 +353,6 @@
             <button class="filter-btn" id="filter-titanic" onclick="filterCategory('Titanic')">Titanic</button>
             <button class="filter-btn" id="filter-huge" onclick="filterCategory('Huge')">Huge</button>
             <button class="filter-btn" id="filter-exclusive" onclick="filterCategory('Exclusive')">Exclusive</button>
-            <button class="filter-btn" id="filter-hot" onclick="filterCategory('HOT')">HOT 🔥</button>
         </div>
         <main class="items-grid" id="itemsContainer"></main>
     </div>
@@ -373,6 +365,11 @@
         <a href="https://discord.gg/R9xzDcq9ny" target="_blank" class="discord-btn">DISCORD</a>
     </div>
 
+    <!-- Stopka wzorowana na zdjęciu -->
+    <footer class="site-footer">
+        © 2026 Create by <span class="author-highlight">jaivivo</span> for Lowkey Studio
+    </footer>
+
     <script>
         const database = 
         [
@@ -381,32 +378,28 @@
                 category: "Titanic",
                 tagClass: "cat-titanic",
                 img: "Titanic Diamond Dragon.png", 
-                value: "N/A", gold: "N/A", rainbow: "N/A",
-                isHot: false
+                value: "N/A", gold: "N/A", rainbow: "N/A"
             },
             {
                 name: "Huge Diamond Festive Cat",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Diamond Festive Cat.png", 
-                value: "N/A", gold: "N/A", rainbow: "N/A",
-                isHot: false
+                value: "N/A", gold: "N/A", rainbow: "N/A"
             },
             {
                 name: "Huge Hell Rock",
                 category: "Huge",
                 tagClass: "cat-huge",
                 img: "Huge Hell Rock.png", 
-                value: "N/A", gold: "N/A", rainbow: "N/A",
-                isHot: false
+                value: "N/A", gold: "N/A", rainbow: "N/A"
             },
             {
                 name: "Exclusive Doge",
                 category: "Exclusive",
                 tagClass: "cat-exclusive",
                 img: "Exclusive Doge.png", 
-                value: "N/A", gold: "N/A", rainbow: "N/A",
-                isHot: true
+                value: "N/A", gold: "N/A", rainbow: "N/A"
             }
         ];
 
@@ -420,13 +413,11 @@
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 
-                const fireHTML = item.isHot ? `<div class="corner-fire">🔥</div>` : '';
                 const imageHTML = item.img 
                     ? `<img src="Images/${item.img}" alt="${item.name}" class="pet-image">`
                     : `<div class="pet-image-placeholder">🐾</div>`;
 
                 card.innerHTML = `
-                    ${fireHTML}
                     <div class="pet-image-container">
                         ${imageHTML}
                     </div>
@@ -471,6 +462,7 @@
                 navHelp.classList.add('active');
                 navValues.classList.remove('active');
                 contentValues.style.display = 'none';
+                contentHelp.style.display = 'none'; // Ukrywamy zamiast blokować pod spodem
                 contentHelp.style.display = 'block';
             }
         }
@@ -483,8 +475,6 @@
                 let matchesCategory = false;
                 if (currentCategory === 'all') {
                     matchesCategory = true;
-                } else if (currentCategory === 'HOT') {
-                    matchesCategory = item.isHot === true;
                 } else {
                     matchesCategory = item.category === currentCategory;
                 }
@@ -503,9 +493,6 @@
 
             if (category === 'all') {
                 displayItems(database);
-            } else if (category === 'HOT') {
-                const filtered = database.filter(item => item.isHot === true);
-                displayItems(filtered);
             } else {
                 const filtered = database.filter(item => item.category === category);
                 displayItems(filtered);
